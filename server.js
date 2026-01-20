@@ -23,14 +23,14 @@ app.use(express.json());
 
 //start the server
 app.listen(port, () => {
-    console.log('Server running on port',port);
+    console.log(Server running on port ${port})
 });
 
 const cors = require("cors");
 const allowedOrigins = [
     "http://localhost:3000",
 // "https://YOUR-frontend.vercel.app", // add later
-"https://onlinecardappwebservice-justin.onrender.com",
+// "https://YOUR-frontend.onrender.com" // add later
 ];
 app.use(
     cors({
@@ -46,17 +46,18 @@ app.use(
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: false,
     })
-)
+);
+
 
 //Example Route: Get all cards
-app.get('/allcontact', async (req, res) => {
+app.get('/allcards', async (req, res) => {
     try{
         let connection = await mysql.createConnection(dbConfig);
-        const [rows] = await connection.execute('SELECT * FROM defaultdb.contact');
+        const [rows] = await connection.execute('SELECT * FROM defaultdb.cards');
         res.json(rows);
     } catch(err) {
         console.error(err);
-        res.status(500).json({message: 'Server error for allcontact'});
+        res.status(500).json({message: 'Server error for allcards'});
     }
 });
 
